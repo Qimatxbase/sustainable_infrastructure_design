@@ -4,6 +4,12 @@ Generative-design studies for a sustainable house, a future worksite and a smart
 
 **Technologies:** Design research · technical reports · Python document tooling
 
+## Event context and contribution
+
+Prepared as an **AI-assisted design and report submission for UTS Tech Festival 2026**. It is a team concept-development submission; individual member responsibilities are not specified here.
+
+The repository contains design proposals, presentation material and report-generation tools. It does not establish a deployed software system or measured environmental, engineering or business benefits.
+
 ## What is included
 
 - Sustainable residential infrastructure concepts and architectural presentation.
@@ -13,7 +19,7 @@ Generative-design studies for a sustainable house, a future worksite and a smart
 ## Run
 
 ```bash
-open submission/final_submission.pdf
+open submission/sustainable_infrastructure_report.pdf
 ```
 
 This repository is a collection of design proposals and reports, rather than a deployed application. Begin with submission/master_report.md or the compiled PDF. The report records team-based work and its original context.

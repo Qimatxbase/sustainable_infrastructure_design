@@ -8,7 +8,7 @@ def main():
     submission_dir = os.path.dirname(os.path.abspath(__file__))
     workspace_dir = os.path.dirname(submission_dir)
     html_file = os.path.join(submission_dir, "master_report.html")
-    pdf_file = os.path.join(submission_dir, "final_submission.pdf")
+    pdf_file = os.path.join(submission_dir, "sustainable_infrastructure_report.pdf")
     
     chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
     
