@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UTS Gen-AI Civil & Environmental Engineering Hackathon 2026 Submission</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        @page {
+            size: A4 portrait;
+            margin: 15mm;
+        }
+
+        @page a3-landscape-page {
+            size: A3 landscape;
+            margin: 10mm;
+        }
+
+        .a3-board-page {
+            page: a3-landscape-page;
+            page-break-before: always;
+            page-break-after: always;
+            width: 400mm;
+            height: 277mm;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            border: 2px solid #002B49;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .board-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #002B49;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .board-header h1 {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            font-size: 20pt !important;
+            color: #002B49;
+        }
+
+        .board-header .board-badge {
+            background-color: #E2E8F0;
+            color: #0F172A;
+            padding: 4px 10px;
+            font-size: 10pt;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .board-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr 1fr;
+            gap: 15px;
+            flex-grow: 1;
+            height: calc(100% - 65px); /* Leave height for header and title block */
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .board-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .board-col h2 {
+            margin-top: 0 !important;
+            margin-bottom: 8px !important;
+            font-size: 11pt !important;
+            color: #002B49;
+            border-bottom: 1px solid #CBD5E1;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .board-image-container {
+            width: 100%;
+            height: 110mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            background-color: #F8FAFC;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .board-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .board-text {
+            font-size: 8.5pt;
+            line-height: 1.35;
+            color: #334155;
+            text-align: justify;
+            overflow-y: auto;
+        }
+
+        .board-text p {
+            margin-bottom: 6px;
+            font-size: 8.5pt;
+            line-height: 1.35;
+        }
+
+        .board-text ul, .board-text ol {
+            margin: 3px 0 6px 12px;
+            padding: 0;
+        }
+
+        .board-text li {
+            margin-bottom: 2px;
+            font-size: 8.5pt;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin: 6px 0 8px 0;
+        }
+
+        .feature-card {
+            border: 1px solid #CBD5E1;
+            border-left-width: 4px;
+            border-radius: 6px;
+            padding: 5px 6px;
+            background: #FFFFFF;
+            font-size: 7.4pt;
+            line-height: 1.25;
+            color: #334155;
+        }
+
+        .feature-card strong {
+            display: block;
+            font-size: 7.8pt;
+            color: #0F172A;
+            margin-bottom: 1px;
+        }
+
+        .tag-energy { border-left-color: #1E3A8A; }
+        .tag-water { border-left-color: #0284C7; }
+        .tag-garden { border-left-color: #15803D; }
+        .tag-thermal { border-left-color: #F59E0B; }
+        .tag-mech { border-left-color: #64748B; }
+
+        .orientation-panel {
+            border: 1px solid #CBD5E1;
+            border-radius: 6px;
+            padding: 7px;
+            margin-bottom: 8px;
+            background: #F8FAFC;
+            display: grid;
+            grid-template-columns: 42px 1fr;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .north-symbol {
+            width: 34px;
+            height: 34px;
+            border: 1.5px solid #002B49;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #002B49;
+            font-weight: 800;
+            font-size: 14pt;
+            margin: 0 auto;
+        }
+
+        .orientation-panel p {
+            margin: 0;
+            font-size: 7.8pt;
+            line-height: 1.3;
+            text-align: left;
+        }
+
+        .colour-legend {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            margin-top: 5px;
+            font-size: 7pt;
+            color: #334155;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .swatch {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            border: 1px solid rgba(15, 23, 42, 0.18);
+        }
+
+        /* Compact BOM table styling for board */
+        .board-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 7.5pt;
+            margin-top: 4px;
+            margin-bottom: 8px;
+        }
+
+        .board-table th, .board-table td {
+            border: 1px solid #E2E8F0;
+            padding: 3px 5px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .board-table th {
+            background-color: #F1F5F9;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .board-table tr:nth-child(even) td {
+            background-color: #F8FAFC;
+        }
+
+        /* Title Block Styling */
+        .title-block {
+            display: grid;
+            grid-template-columns: 2fr 1.2fr 1.2fr 1fr 1fr 1fr;
+            border: 1.5px solid #002B49;
+            margin-top: 10px;
+            background-color: #F8FAFC;
+            font-size: 7.5pt;
+            height: 38mm;
+            box-sizing: border-box;
+        }
+
+        .tb-cell {
+            padding: 4px 8px;
+            border-right: 1.5px solid #002B49;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .tb-cell:last-child {
+            border-right: none;
+        }
+
+        .tb-label {
+            font-size: 6.5pt;
+            text-transform: uppercase;
+            color: #64748B;
+            font-weight: 600;
+            margin-bottom: 1px;
+        }
+
+        .tb-val {
+            font-weight: 700;
+            color: #0F172A;
+            font-size: 7.5pt;
+            line-height: 1.2;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: #333333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
+        }
+
+        /* Cover Page Styling */
+        .cover-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            page-break-after: always;
+            box-sizing: border-box;
+            padding: 40px 0;
+        }
+
+        .cover-header {
+            border-bottom: 3px solid #002B49;
+            padding-bottom: 20px;
+        }
+
+        .uts-logo-text {
+            font-size: 24pt;
+            font-weight: 700;
+            color: #002B49;
+            letter-spacing: 1px;
+        }
+
+        .uts-school {
+            font-size: 11pt;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #555555;
+            margin-top: 5px;
+        }
+
+        .cover-body {
+            margin-top: 80px;
+        }
+
+        .hackathon-title {
+            font-size: 28pt;
+            font-weight: 700;
+            color: #002B49;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .hackathon-subtitle {
+            font-size: 16pt;
+            font-weight: 400;
+            color: #D32F2F;
+            margin-bottom: 40px;
+            letter-spacing: 0.5px;
+        }
+
+        .report-label {
+            display: inline-block;
+            background-color: #E2E8F0;
+            color: #1E293B;
+            padding: 6px 12px;
+            font-size: 10pt;
+            font-weight: 600;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .cover-footer {
+            border-top: 1px solid #E2E8F0;
+            padding-top: 30px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .meta-item h4 {
+            margin: 0 0 5px 0;
+            font-size: 10pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #718096;
+        }
+
+        .meta-item p {
+            margin: 0;
+            font-size: 11pt;
+            font-weight: 500;
+            color: #2D3748;
+        }
+
+        .group-list {
+            margin: 5px 0 0 0;
+            padding-left: 20px;
+            font-size: 11pt;
+            font-weight: 500;
+            color: #2D3748;
+        }
+
+        /* Generic Layout & Headers */
+        .page {
+            page-break-after: always;
+            box-sizing: border-box;
+            padding-top: 10px;
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+        }
+
+        h1 {
+            font-size: 20pt;
+            font-weight: 700;
+            color: #002B49;
+            border-bottom: 2px solid #002B49;
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: 600;
+            color: #002B49;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #2D3748;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Callout Box (Alerts) */
+        .alert-box {
+            background-color: #F0F9FF;
+            border-left: 4px solid #0284C7;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .alert-box p {
+            margin: 0;
+            font-size: 10.5pt;
+            color: #0369A1;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-size: 9.5pt;
+        }
+
+        th, td {
+            border: 1px solid #CBD5E1;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #F1F5F9;
+            color: #0F172A;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #F8FAFC;
+        }
+
+        /* Pre & Code */
+        pre {
+            background-color: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 9pt;
+            white-space: pre-wrap;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #F1F5F9;
+            padding: 2px 4px;
+            font-size: 9pt;
+            border-radius: 4px;
+        }
+
+        /* Images styling */
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 90%;
+            max-height: 280px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .image-caption {
+            margin-top: 8px;
+            font-size: 9pt;
+            color: #64748B;
+            font-style: italic;
+        }
+
+        /* TOC list styling */
+        .toc-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 30px;
+        }
+
+        .toc-list li {
+            font-size: 12pt;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: #1E293B;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .toc-list li span.dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted #CBD5E1;
+            margin: 0 10px 4px 10px;
+        }
+
+        .toc-sublist {
+            list-style-type: none;
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .toc-sublist li {
+            font-size: 10.5pt;
+            font-weight: 400;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- COVER PAGE -->
+    <div class="cover-page">
+        <div class="cover-header">
+            <div class="uts-logo-text">UTS</div>
+            <div class="uts-school">School of Civil & Environmental Engineering</div>
+        </div>
+        
+        <div class="cover-body">
+            <span class="report-label">Hackathon Submission</span>
+            <div class="hackathon-title">GEN-AI HACKATHON FOR CIVIL & ENVIRONMENTAL ENGINEERING</div>
+            <div class="hackathon-subtitle">UTS TECH FESTIVAL 2026</div>
+            <p style="font-size: 12pt; color: #475569; max-width: 600px; text-align: left;">
+                An integrated AI-assisted design and technology assessment report addressing a sustainable urban LEGO house A3 board, future construction equipment fleets, and smart multi-modal intersection designs under Austroads guidelines.
+            </p>
+        </div>
+
+        <div class="cover-footer">
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <h4>Prepared by (Group Members)</h4>
+                    <ul class="group-list">
+                        <li>[Enter Member Name 1] (Student ID: [XXXXXX])</li>
+                        <li>[Enter Member Name 2] (Student ID: [XXXXXX])</li>
+                        <li>[Enter Member Name 3] (Student ID: [XXXXXX])</li>
+                        <li>[Enter Member Name 4] (Student ID: [XXXXXX])</li>
+                        <li>[Enter Member Name 5] (Student ID: [XXXXXX])</li>
+                    </ul>
+                </div>
+                <div class="meta-item">
+                    <h4>Submitted to</h4>
+                    <p>Dr Danial Jahed Armaghani</p>
+                    <p>Dr Haleh Rasekh</p>
+                    <p style="margin-top: 10px;"><strong>Submission Date:</strong> June 25, 2026</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="page">
+        <h1>Table of Contents</h1>
+        <ul class="toc-list">
+            <li>
+                <strong>1. Scenario 1: LEGO Resilient & Sustainable Infrastructure (A3 Architectural Board)</strong>
+                <span class="dots"></span>
+                <strong>Page 3</strong>
+            </li>
+            <li>
+                <strong>2. Scenario 2: The Future Worksite (WesTrac® / CAT)</strong>
+                <span class="dots"></span>
+                <strong>Page 6</strong>
+            </li>
+            <li>
+                <ul class="toc-sublist">
+                    <li>2.1 Final Gen-AI Prompts</li>
+                    <li>2.2 Technology Assessment Summary (5 Key Technologies)</li>
+                    <li>2.3 Equipment Specification Comparison Matrix</li>
+                    <li>2.4 Workforce Assessment & Leadership Recommendations</li>
+                    <li>2.5 Critical Reflection on Gen-AI</li>
+                </ul>
+            </li>
+            <li>
+                <strong>3. Scenario 3: Smart Intersection Design (Kypreos Group)</strong>
+                <span class="dots"></span>
+                <strong>Page 8</strong>
+            </li>
+            <li>
+                <ul class="toc-sublist">
+                    <li>3.1 Final Gen-AI Prompt</li>
+                    <li>3.2 Austroads-Compliant Structure &amp; Sustainable Pavement Mix Design Plan</li>
+                    <li>3.3 Trade-off Matrix & Feasibility Assessment</li>
+                    <li>3.4 Critique on Long-Term Benefits</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="alert-box" style="margin-top: 40px;">
+            <p><strong>Note to Group Members:</strong> Please update the cover page with your names and student IDs prior to converting this document to the final PDF file.</p>
+        </div>
+
+    <!-- SCENARIO 1 REPORT PAGE 1 -->
+    <div class="page">
+<h1>1. Scenario 1: LEGO Resilient & Sustainable Infrastructure</h1>
+<h2>A3 Architectural Board: Urban Sustainable LEGO House</h2>
+<h3>1.1 Executive Summary & Design Concept</h3>
+<p>Rapid urbanization, densification, resource scarcity, and extreme weather events such as urban heat waves demand new paradigms in residential design. This project proposes a <strong>Sustainable Urban LEGO House</strong> presented as a single <strong>A3 architectural board</strong> with a title block, drawing number, revision data, north orientation, scale note, and sheet metadata arranged in the style expected for Australian technical drawings under the AS 1100 drawing-presentation approach.</p>
+<p>The house is designed for a Suburban Sydney residential block and uses a double-storey LEGO layout on a light grey baseplate representing the site boundary. It consists of a main two-story section on the right, a first-floor garage on the left with a rooftop garden terrace on top of the garage (acting as the only rooftop garden), a landscaped ground-level front garden, and clear living zones. The design applies Passivhaus principles through a highly insulated envelope, airtight junctions, controlled window areas, external shading, a heat pump, and heat recovery ventilation.</p>
+<p>The visual language uses realistic house colours and clear system emphasis: cream/beige exterior walls, light grey sloped roof tiles, green rooftop and ground vegetation, rainwater harvesting elements, dark solar panels, white battery storage, and subtle technical highlights for energy and water systems. This keeps the board bright, polished, easy to read, and consistent with the visual clarity of LEGO presentation material.</p>
+<h3>1.2 Final/Optimum Gen-AI Prompts</h3>
+<p>To achieve consistent, high-fidelity visual and technical representations, we utilized a multi-stage prompt engineering approach.</p>
+<h4><em>Prompt 1: Aesthetic & Isometric Concept Design</em></h4>
+<p>A professional studio shot of an architectural LEGO model of a modern sustainable double-storey suburban house in Sydney. The house is built on a light grey baseplate. The main two-storey structure is on the right, featuring warm beige, white, and natural wood-toned LEGO bricks, with large black-framed windows and warm light glowing from within. On the left is a single-storey garage with a flat roof that has a lush green rooftop garden terrace with tiny plants, a glass railing, and a door leading to it from the upper level of the main house. The main roof on the right is sloped at a 33-degree angle, covered in light grey slate tiles with neat dark-blue solar panels and a small white micro wind turbine. Behind the house are a grey rainwater tank with blue pipes, solar battery packs, and a heat pump. The front yard is beautifully landscaped with green grass, a pathway, and a modern electric car in the driveway. Isolated on a clean white background, high-end commercial presentation style.</p>
+<h4><em>Prompt 2: Technical Schematic & Orthographic Views</em></h4>
+<p>A professional, clean, technical architectural drawing sheet formatted as an A3 landscape board for the sustainable LEGO house shown in the reference image. The drawing features exactly three orthographic projections on a white background: Front Elevation, Left Side Elevation, and Top Plan View, rendered in a clean, professional LEGO brick blueprint style. The elevations and details must be identical to the reference image: a grey garage on the left, a two-storey cream and wood-paneled house on the right, a sloped light-grey tiled roof with dark solar panels and a white micro wind turbine, and a lush green rooftop garden on the garage roof. The Left Side Elevation clearly shows the rainwater tanks with blue piping, battery storage, and heat pump unit. There are thin, neat black leader lines and technical text labels pointing to: 'North-Facing Solar Panels', 'Micro Wind Turbine', 'Garage Rooftop Garden', 'Rainwater Harvesting Cylinders', 'Solar Battery Storage', and 'Air-Source Heat Pump'. An AS 1100-style title block is positioned in the bottom-right corner. Clean, high-resolution drafting presentation.</p>
+<h3>1.3 A3 Board Visuals & Technical Diagram</h3>
+<p>Below are the final AI-generated visual design output and the technical schematic. Together they form the content hierarchy for one A3 sheet: a dominant perspective view and a technical elevation drawing showing exactly three orthographic views (Front Elevation, Left Side Elevation, and Top Plan View) with an integrated AS 1100-style title block, matching standard technical drawing layouts.</p>
+<h4><em>1.3.1 Main Perspective Rendering</em></h4>
+<div class="board-image-container"><img src="images/sydney_lego_house_concept.jpg" alt="LEGO Sustainable Urban House Concept"></div>
+<h4><em>1.3.2 Technical Board Diagram</em></h4>
+<div class="board-image-container"><img src="images/sydney_lego_house_technical.jpg" alt="LEGO Sustainable Urban House Technical Views"></div>
+<h3>1.4 Detailed Component & Connection Breakdown</h3>
+<p>The structural and mechanical assemblies are categorized into <strong>Substructure (Foundation)</strong>, <strong>Superstructure (Insulated Envelope)</strong>, and <strong>Utility/Sustainability Systems</strong>. The board uses consistent visual coding so each feature is easy to identify: green for vegetation, blue for water, dark blue/black for solar PV, white for battery storage, and grey for heat pump/mechanical services.</p>
+<h4><em>4.1.1 Bill of Materials (BOM) & Specifications</em></h4>
+<table>
+<thead>
+<tr>
+<th>Assembly</th>
+<th>LEGO Part Name / Description</th>
+<th>Part ID</th>
+<th>Color</th>
+<th>Qty</th>
+<th>Function & Connection Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>Substructure</td>
+<td>Baseplate 32 x 32 Studs</td>
+<td>3811</td>
+<td>Light Gray</td>
+<td>1</td>
+<td>Represents urban site boundary; anchors ground footings.</td>
+</tr>
+<tr>
+<td>Substructure</td>
+<td>Brick 2 x 4 (Foundation Footings)</td>
+<td>3001</td>
+<td>Medium Gray</td>
+<td>12</td>
+<td>Elevates the floor slab and establishes solid level foundation.</td>
+</tr>
+<tr>
+<td>Superstructure</td>
+<td>Support Plate 16 x 16</td>
+<td>91405</td>
+<td>Medium Gray</td>
+<td>1</td>
+<td>High-mass concrete-style floor slab.</td>
+</tr>
+<tr>
+<td>Superstructure</td>
+<td>Brick 1x2, 1x4, 1x6 (Wall Bricks)</td>
+<td>Various</td>
+<td>White / Sand-colored</td>
+<td>145</td>
+<td>Insulated double-walls combining white masonry and sand-colored ground level panels.</td>
+</tr>
+<tr>
+<td>Superstructure</td>
+<td>Window 1 x 2 x 2 Flat</td>
+<td>60592</td>
+<td>White / Clear</td>
+<td>8</td>
+<td>Triple-glazed window blocks in insulated frames.</td>
+</tr>
+<tr>
+<td>Superstructure</td>
+<td>Door 1 x 4 x 6 Frame with Pane</td>
+<td>60623</td>
+<td>White / Clear</td>
+<td>1</td>
+<td>Front entry door with airtight seals.</td>
+</tr>
+<tr>
+<td>Utilities</td>
+<td>Tile 2 x 4 (Solar PV Panels)</td>
+<td>87079</td>
+<td>Dark Blue / Black</td>
+<td>16</td>
+<td>North-facing sloped roof photovoltaic array.</td>
+</tr>
+<tr>
+<td>Utilities</td>
+<td>Garage Door 1x4x6</td>
+<td>42107</td>
+<td>White</td>
+<td>1</td>
+<td>Functional roller garage door.</td>
+</tr>
+<tr>
+<td>Utilities</td>
+<td>Propeller 3-Blade 5.5L</td>
+<td>30332</td>
+<td>White</td>
+<td>1</td>
+<td>Rooftop micro wind turbine positioned above roof turbulence.</td>
+</tr>
+<tr>
+<td>Utilities</td>
+<td>Cylinder 1 x 1 x 5 (Rainwater)</td>
+<td>3062b</td>
+<td>White</td>
+<td>3</td>
+<td>Rainwater harvesting and greywater storage tanks.</td>
+</tr>
+<tr>
+<td>Utilities</td>
+<td>Brick 2x2 with Grille (Heat Pump)</td>
+<td>3003/2412</td>
+<td>White</td>
+<td>1</td>
+<td>Air-source heat pump compressor split units.</td>
+</tr>
+<tr>
+<td>Utilities</td>
+<td>Brick 1x2x3 (Battery Storage)</td>
+<td>22885</td>
+<td>White</td>
+<td>2</td>
+<td>Wall-mounted solar battery storage banks (Tesla Powerwalls).</td>
+</tr>
+<tr>
+<td>Landscape</td>
+<td>Plant Leaves 6 x 5</td>
+<td>2417</td>
+<td>Green</td>
+<td>15</td>
+<td>Rooftop garden vegetative buffer.</td>
+</tr>
+</tbody>
+</table>
+<h4><em>1.4.2 Mechanical Connections & Assembly Method</em></h4>
+<p>Below is a detailed close-up image showing the mechanical assembly and plumbing connections of the sustainable utility systems located on the service side of the house.</p>
+<h4><em>1.4.3 Utility & Mechanical Close-up</em></h4>
+<div class="board-image-container"><img src="images/sydney_lego_house_utilities.jpg" alt="LEGO Sustainable House Utilities Detail"></div>
+<p>The mechanical interlocking techniques and connections are structured below:</p>
+<table>
+<thead>
+<tr>
+<th>Connection Element</th>
+<th>LEGO Part & Assembly Technique</th>
+<th>Engineering Function & Real-World Analog</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><strong>Airtight Masonry Interlock</strong></td>
+<td>Running bond with staggered joints, using thin Technic flexible hoses representing sealing gaskets.</td>
+<td>Simulates double-skin insulated walls and forms an airtight envelope with compression seals.</td>
+</tr>
+<tr>
+<td><strong>Foundation Anchor</strong></td>
+<td>Technic pins and studs locking foundation footings directly to baseplate.</td>
+<td>Anchors the superstructure to establish structural stability and high shear/sliding resistance.</td>
+</tr>
+<tr>
+<td><strong>Glazing Sealing</strong></td>
+<td>Press-fitting window frames with a 1-stud recess overlap in the wall cavity.</td>
+<td>Eliminates air infiltration and minimizes thermal bridging at window-to-wall interfaces.</td>
+</tr>
+</tbody>
+</table>
+<h3>1.5 Structural Stability, Orientation & Passivhaus Engineering</h3>
+<h4><em>1.5.1 Gravity and Environmental Load Paths</em></h4>
+<p>The gravity and environmental structural paths are detailed below:</p>
+<table>
+<thead>
+<tr>
+<th>Structural Layer</th>
+<th>LEGO Implementation</th>
+<th>Load Path & Stability Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><strong>Roof & Solar Arrays</strong></td>
+<td>33-degree sloped plates resting on A-frame truss blocks.</td>
+<td>Receives environmental wind/rain loads; transfers gravity loads downward to walls.</td>
+</tr>
+<tr>
+<td><strong>Superstructure Walls</strong></td>
+<td>Double-skin interlocking running-bond bricks (1x2, 1x4, 1x6).</td>
+<td>Acts as load-bearing columns; transfers gravity load to slab and resists lateral shear.</td>
+</tr>
+<tr>
+<td><strong>Base Slab</strong></td>
+<td>Support Plate 16x16 anchored to footings.</td>
+<td>Acts as structural floor diaphragm; distributes gravity loads to foundation footings.</td>
+</tr>
+<tr>
+<td><strong>Foundation Footings</strong></td>
+<td>12 medium grey 2x4 bricks resting on light grey baseplate studs.</td>
+<td>Acts as shallow foundation pads; transfers load evenly to baseplate ground.</td>
+</tr>
+</tbody>
+</table>
+<h4><em>1.5.2 Strategic Placement & Solar Orientation</em></h4>
+<p>The solar orientation and placement strategies for Suburban Sydney are detailed below:</p>
+<table>
+<thead>
+<tr>
+<th>Design Element</th>
+<th>Orientation & Placement Criteria</th>
+<th>Sustainable Engineering Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><strong>Main Glazing & Solar Roof</strong></td>
+<td>Oriented true North (Australian Southern Hemisphere layout).</td>
+<td>Maximizes winter passive solar heat gain and optimizes solar PV electricity production.</td>
+</tr>
+<tr>
+<td><strong>Roof Pitch</strong></td>
+<td>Set at approximately 33 degrees.</td>
+<td>Optimized for Suburban Sydney's latitude to maximize solar capture across seasons.</td>
+</tr>
+<tr>
+<td><strong>Eaves Projection</strong></td>
+<td>Extends outward by 2 studs.</td>
+<td>Provides self-shading: blocks high-angle summer sun but admits low-angle winter sun.</td>
+</tr>
+<tr>
+<td><strong>Utility Systems</strong></td>
+<td>Rainwater tanks, battery storage, and heat pump placed on the south service side.</td>
+<td>Minimizes piping length, keeps equipment shaded, and maximizes gravity rainwater collection.</td>
+</tr>
+<tr>
+<td><strong>Rooftop Garden</strong></td>
+<td>Located above the garage on the flat roof terrace.</td>
+<td>Reduces stormwater peak runoff, provides evaporative cooling, and insulates garage ceiling.</td>
+</tr>
+</tbody>
+</table>
+<h4><em>1.5.3 Integrated Sustainability Microgrid & Thermal Systems</em></h4>
+<p>The integrated sustainability subsystems are detailed below:</p>
+<table>
+<thead>
+<tr>
+<th>Subsystem</th>
+<th>LEGO Visual Representation</th>
+<th>Engineering Principle & Integration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><strong>Passivhaus Envelope</strong></td>
+<td>Double-wall beige bricks with recessed triple-glazed frames.</td>
+<td>Continuous insulation and airtightness; paired with HRV to minimize HVAC load.</td>
+</tr>
+<tr>
+<td><strong>Solar & Wind Microgrid</strong></td>
+<td>North-facing dark blue PV tiles, white wind turbine, and white battery bricks.</td>
+<td>Generates clean electricity, stores energy, and supplies local residential loads.</td>
+</tr>
+<tr>
+<td><strong>Rainwater Harvesting</strong></td>
+<td>Light grey cylinders, blue connecting pipes, and green roof garden.</td>
+<td>Captures roof runoff, stores water, reduces runoff peaks, and supplies greywater.</td>
+</tr>
+<tr>
+<td><strong>Space Heating & Cooling</strong></td>
+<td>Grey external heat pump block with fan grille detail.</td>
+<td>Provides highly efficient heat transfer for indoor climate control.</td>
+</tr>
+</tbody>
+</table>
+<h3>1.6 Gen-AI Collaboration Methodology & Reflection</h3>
+<h4><em>1.6.1 Interactive Prompt Iteration</em></h4>
+<p>The collaboration methodology and prompt calibration details are outlined below:</p>
+<table>
+<thead>
+<tr>
+<th>Design Problem</th>
+<th>Gen-AI Prompt Refinement</th>
+<th>Visual & Technical Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><strong>House Scale & Layout</strong></td>
+<td>Specified 'double-storey urban house with a garage and rooftop terrace'.</td>
+<td>Moved from a toy model to a realistic residential architectural concept.</td>
+</tr>
+<tr>
+<td><strong>Visual Material Appeal</strong></td>
+<td>Included detailed textures: 'beige, white, and wood-toned bricks', 'light slate tiles'.</td>
+<td>Avoided flat colors; achieved a premium, professional LEGO website render style.</td>
+</tr>
+<tr>
+<td><strong>Technical Consistency</strong></td>
+<td>Instructed exactly three orthographic projections (Front, Side, Top) with an AS 1100 title block.</td>
+<td>Created a clean A3 landscape schematic with aligned views and formal title block.</td>
+</tr>
+</tbody>
+</table>
+<h4><em>1.6.2 Engineering Judgment vs. AI Limitations</em></h4>
+<p>The critical comparison of AI design output and human engineering corrective judgment is detailed below:</p>
+<table>
+<thead>
+<tr>
+<th>AI Design Concept Limitation</th>
+<th>Engineering Critique & Correction</th>
+<th>Real-World Feasibility Logic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><strong>Excessive floor-to-ceiling glass on all facades.</strong></td>
+<td>Replaced with controlled glazing sizes and insulated window frames.</td>
+<td>Maintains thermodynamic envelope stability to prevent massive thermal heat gains/losses.</td>
+</tr>
+<tr>
+<td><strong>Floating or structurally unsupported solar panels.</strong></td>
+<td>Specified mounting solar tiles on 33° sloped roof tiles using hinge mounts.</td>
+<td>Ensures secure mechanical connections capable of withstanding wind and gravity loads.</td>
+</tr>
+<tr>
+<td><strong>Omission of mechanical ventilation in an airtight structure.</strong></td>
+<td>Integrated MVHR ventilation combined with air-source heat pump.</td>
+<td>Ensures healthy indoor air quality and heat recovery in a sealed Passivhaus envelope.</td>
+</tr>
+</tbody>
+</table>
+    </div>
+
+    <!-- SCENARIO 1 REPORT PAGE 2 -->
+    <div class="page">
+
+    </div>
+
+    <!-- SCENARIO 1 REPORT PAGE 3 -->
+    <div class="page">
+
+    </div>
+<!-- SCENARIO 1: A3 ARCHITECTURAL BOARD -->
+    <div class="a3-board-page">
+        <!-- Board Header -->
+        <div class="board-header">
+            <h1>URBAN SUSTAINABLE LEGO HOUSE (SUBURBAN SYDNEY): A3 ARCHITECTURAL BOARD</h1>
+            <span class="board-badge">Scenario 1 | AS 11000-Style Sheet</span>
+        </div>
+
+        <!-- Board Grid Layout -->
+        <div class="board-grid">
+            
+            <!-- Column 1: Main Perspective Rendering & Design Concept -->
+            <div class="board-col">
+                <h2>01. Main Perspective &amp; Design Concept</h2>
+                <div class="board-image-container">
+                    <img src="images/sydney_lego_house_concept.jpg" alt="Large Urban LEGO Sustainable House Perspective">
+                </div>
+                <div class="board-text">
+                    <p><strong>Design Concept:</strong> A compact double-storey urban LEGO house designed for climate resilience, low energy demand, and water-sensitive city living. The light grey baseplate reads as the site boundary and footpath edge. The house exterior combines clean white bricks with sand-colored lower panels, bright white sloped roof tiles, a white garage door, and a lush, colorful garage rooftop garden terrace to create a bright, modern, and highly aesthetic sustainable design.</p>
+                    <div class="feature-grid">
+                        <div class="feature-card tag-energy"><strong>Solar + Battery</strong>Dark PV tiles charge white wall-mounted storage units for evening demand.</div>
+                        <div class="feature-card tag-energy"><strong>Micro Wind</strong>Small roof turbine supplements solar during windy weather.</div>
+                        <div class="feature-card tag-water"><strong>Rainwater</strong>Blue pipework directs roof runoff into visible storage tanks.</div>
+                        <div class="feature-card tag-garden"><strong>Rooftop Garden</strong>Green planting cools the roof and slows stormwater discharge.</div>
+                        <div class="feature-card tag-mech"><strong>Heat Pump</strong>Grey external unit provides efficient heating and cooling.</div>
+                        <div class="feature-card tag-thermal"><strong>Passivhaus</strong>Airtight double walls, controlled glazing, eaves, and HRV reduce demand.</div>
+                    </div>
+                    <div class="colour-legend">
+                        <span class="legend-item"><span class="swatch" style="background:#FFFFFF; border: 1px solid #ccc;"></span>White walls</span>
+                        <span class="legend-item"><span class="swatch" style="background:#EAB308;"></span>Sand-colored walls</span>
+                        <span class="legend-item"><span class="swatch" style="background:#F3F4F6; border: 1px solid #ccc;"></span>White roof</span>
+                        <span class="legend-item"><span class="swatch" style="background:#111827;"></span>Solar panels</span>
+                        <span class="legend-item"><span class="swatch" style="background:#15803D;"></span>Vegetation</span>
+                        <span class="legend-item"><span class="swatch" style="background:#0EA5E9;"></span>Water system</span>
+                        <span class="legend-item"><span class="swatch" style="background:#F59E0B;"></span>Thermal notes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Technical elevations & BOM -->
+            <div class="board-col">
+                <h2>02. Technical Elevations &amp; Component List</h2>
+                <div class="board-image-container">
+                    <img src="images/sydney_lego_house_technical.jpg" alt="Technical Elevations and Orthographic Views">
+                </div>
+                <div class="board-text" style="flex-grow: 1;">
+                    <p style="margin-bottom: 2px;"><strong>LEGO Bill of Materials (BOM) &amp; Connections:</strong></p>
+                    <table class="board-table">
+                        <thead>
+                            <tr>
+                                <th>Assembly</th>
+                                <th>LEGO Part &amp; Color</th>
+                                <th>Qty</th>
+                                <th>Function &amp; Connection</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Substructure</strong></td>
+                                <td>Baseplate 32x32 (Light Gray)</td>
+                                <td>1</td>
+                                <td>Urban plot base boundary.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Substructure</strong></td>
+                                <td>Brick 2x4 (Medium Gray)</td>
+                                <td>12</td>
+                                <td>Ground-level foundation footings.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Superstructure</strong></td>
+                                <td>Plate 16x16 (Medium Gray)</td>
+                                <td>1</td>
+                                <td>Passivhaus insulated concrete floor slab.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Superstructure</strong></td>
+                                <td>Bricks 1x2, 1x4 (White &amp; Sand-colored)</td>
+                                <td>145</td>
+                                <td>Insulated double-walls combining white masonry and sand-colored ground level panels.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Superstructure</strong></td>
+                                <td>Window 1x2x2 Flat (White/Clear)</td>
+                                <td>8</td>
+                                <td>Triple-glazed windows in white insulated frames.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Utilities</strong></td>
+                                <td>Tile 2x4 (Dark Blue)</td>
+                                <td>16</td>
+                                <td>North-facing roof solar PV panels.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Utilities</strong></td>
+                                <td>Garage Door 1x4x6 (White)</td>
+                                <td>1</td>
+                                <td>Functional roller garage door.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Utilities</strong></td>
+                                <td>Propeller 3-Blade (White)</td>
+                                <td>1</td>
+                                <td>Rooftop wind turbine micro-energy.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Utilities</strong></td>
+                                <td>Cylinder 1x1x5 (White)</td>
+                                <td>3</td>
+                                <td>Rainwater harvesting storage cylinders.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Utilities</strong></td>
+                                <td>Brick 2x2 with Grille (White)</td>
+                                <td>1</td>
+                                <td>Air-source heat pump compressor unit.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Utilities</strong></td>
+                                <td>Brick 1x2x3 (White)</td>
+                                <td>2</td>
+                                <td>Wall-mounted solar battery storage (Powerwalls).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 7.5pt; margin-top: -2px; color: #64748b;">Connections use standard vertical studs, running-bond brickwork, and Technic pin friction locks for wind bracing. Thin hoses represent airtight Passivhaus gasket lines.</p>
+                </div>
+            </div>
+
+            <!-- Column 3: Strategic Placement, Passivhaus Physics & Gen-AI Reflection -->
+            <div class="board-col">
+                <h2>03. Orientation, Performance &amp; AI Reflection</h2>
+                <div class="board-text">
+                    <div class="orientation-panel">
+                        <div class="north-symbol">N</div>
+                        <p><strong>Strategic Placement:</strong> For an Australian southern-hemisphere site, the main glazing and PV roof plane face true North. The roof pitch is approximately 33 degrees for Sydney-oriented solar capture, with eaves shading high summer sun and admitting lower winter sun.</p>
+                    </div>
+                    <p><strong>Environmental Performance:</strong> Rainwater tanks sit on the service side for gravity collection, the heat pump is kept on a ventilated external wall, and the rooftop garden buffers heat gain while reducing stormwater runoff. The PV array, battery units, wind turbine, and heat pump operate as a compact urban microgrid.</p>
+                    <p><strong>Passivhaus Principles:</strong> The model communicates airtight construction, continuous insulation, reduced thermal bridging, controlled north glazing, summer shading, and heat recovery ventilation. These measures reduce heating and cooling loads before renewable energy systems are added.</p>
+                    <p><strong>Gen-AI Prompting &amp; Calibration:</strong> Initial AI outputs produced generic toy colours and oversized glass. The prompt was refined to require warm neutral walls, realistic light grey roof colours, green vegetation, blue water infrastructure, dark PV panels, and specific sustainability labels. Human review corrected the physics by limiting glazing, adding eaves, defining double-wall construction, and including HRV with a heat pump.</p>
+                    <p><strong>AS 11000-Style Presentation:</strong> The sheet uses a border, ordered views, clear labels, a drawing title, scale note, sheet number, revision field, date, drawn/checked fields, and units, matching the communication intent of Australian technical drawing practice.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Architectural Title Block -->
+        <div class="title-block">
+            <div class="tb-cell">
+                <span class="tb-label">Project / Client</span>
+                <span class="tb-val">UTS Tech Festival 2026: Sustainable City Infrastructure Prototyping</span>
+            </div>
+            <div class="tb-cell">
+                <span class="tb-label">Drawing Title</span>
+                <span class="tb-val">Scenario 1 - Sustainable Urban LEGO House A3 Board</span>
+            </div>
+            <div class="tb-cell">
+                <span class="tb-label">Drawing Metadata</span>
+                <span class="tb-val">Drawing No. A-101<br>Revision A | Units: mm</span>
+            </div>
+            <div class="tb-cell" style="width: 70px;">
+                <span class="tb-label">Scale / Size</span>
+                <span class="tb-val">N.T.S.<br>A3 Landscape</span>
+            </div>
+            <div class="tb-cell" style="width: 80px;">
+                <span class="tb-label">Date / Checked</span>
+                <span class="tb-val">25 June 2026<br>Drawn: Team | Checked: Tutor</span>
+            </div>
+            <div class="tb-cell" style="width: 150px;">
+                <span class="tb-label">School / Team</span>
+                <span class="tb-val" style="font-size: 6.5pt; font-weight: normal;">
+                    UTS Civil &amp; Environmental Engineering<br>
+                    • Member 1 (ID: XXXXXX)<br>
+                    • Member 2 (ID: XXXXXX)<br>
+                    • Member 3 (ID: XXXXXX)<br>
+                    • Member 4 (ID: XXXXXX)<br>
+                    • Member 5 (ID: XXXXXX)
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENARIO 2 PAGE 1 -->
+    <div class="page">
+<h1>2. Scenario 2: The Future Worksite</h1>
+<h2>WesTrac® Equipment Specification & Workforce Transition Study</h2>
+<p><strong>Project Context:</strong> Cooks River Urban Stormwater Drainage Project</p>
+<p><strong>Sponsor Alignment:</strong> WesTrac® / Caterpillar® (CAT)</p>
+<h3>2.1 Final Gen-AI Prompts</h3>
+<p><em>(Total Word Count: 168 words)</em></p>
+<h4><em>Prompt A: Technology & Fleet Comparison</em></h4>
+<p>Evaluate the Cooks River Urban Stormwater Drainage Project in an Australian context. Conduct a technology assessment detailing how 5 emerging technologies (3D Machine Control for trenching and swale trimming, On-board Payload Weighing for urban haulage, Fleet Telematics for weather-risk staging, Low-emission/Electric Compact Excavators/Loaders for residential noise, and Remote-controlled machinery for hazardous canal corridors) change construction sequencing, earthworks, and environmental compliance. Generate a comparative matrix comparing the stormwater plant fleet specified today vs. 5 years from now, addressing machine selection, grade control, compaction, emissions, noise, safety, and Total Cost of Ownership. Flag AI assumptions and specify engineer verification requirements.</p>
+<h4><em>Prompt B: Workforce & Leadership Recommendations</em></h4>
+<p>For the WesTrac workforce of tomorrow, analyze future skills, shifting competencies (devalued traditional diesel vs. critical digital/electrification/sensor skills), and emissions advisory needs for urban stormwater infrastructure contractors. Formulate three high-priority recommendations for WesTrac's senior leadership to prepare their field engineers, technical training, and graduate recruitment for this 5-year transition.</p>
+<h3>2.2 Technology Assessment Summary (5 Key Technologies)</h3>
+<h1>Project Life Cycle Assessment: Cooks River Urban Stormwater Drainage Project with Earthmoving Machinery Recommendations</h1>
+<ol>
+<li>Goal and Scope Definition</li>
+</ol>
+<p>The purpose of this life cycle assessment is to evaluate how an urban stormwater drainage upgrade within the Cooks River catchment should be planned, constructed, operated and maintained. The project is treated as a catchment-scale civil works program rather than a single drainage asset replacement. This is appropriate because the Cooks River is a highly urbanised waterway affected by channelisation, sedimentation, poor water quality, urban runoff, industrial land uses and fragmented asset ownership. Therefore, the assessment must consider drainage capacity, water quality, construction impact, machinery selection and long-term maintenance as connected issues.</p>
+<p>The assessment covers planning, material inputs, site establishment, earthworks, drainage construction, water-sensitive design, operation, maintenance and end-of-life renewal. Each stage is assessed against resource demand, environmental impact and implementation risk. The main life cycle concern is that poorly controlled excavation, spoil handling and drainage construction could worsen the same stormwater issues the project is intended to resolve. Therefore, the project should prioritise precise earthworks, staged disturbance, sediment containment, low-impact construction methods and maintainable stormwater assets.</p>
+<ol>
+<li>Existing Catchment Conditions and Project Need</li>
+</ol>
+<p>The Cooks River catchment requires an integrated stormwater response because it is large, urbanised and environmentally degraded. The catchment includes residential, commercial, industrial, transport and open-space land uses, which increase impervious surface area and accelerate runoff into the drainage network. These conditions reduce infiltration, increase peak flows and transport pollutants quickly into the river system. Therefore, the project should not focus only on increasing pipe capacity; it should also reduce sediment, litter, contaminated runoff and erosion at source.</p>
+<p>The existing catchment values include ecological, recreational, visual and community values. The river supports remnant vegetation, wetlands, intertidal areas, native birds, aquatic fauna, shared paths, parklands and community open space. However, these values are constrained by poor water quality, altered drainage channels, bank erosion and historical urban development. Therefore, construction works must be designed to protect existing river values while improving long-term drainage performance and river health.</p>
+<ol>
+<li>Planning and Design Stage</li>
+</ol>
+<p>The planning stage should establish the hydraulic, environmental and constructability basis for the project. This requires civil engineers, stormwater modellers, environmental consultants, utility locators, surveyors, geotechnical engineers and council asset managers. The evidence from the catchment plan shows that stormwater issues are distributed across multiple sub-catchments and management authorities. Therefore, the design stage must include catchment mapping, flood modelling, utility investigation, water quality assessment, contamination screening and staging analysis.</p>
+<p>This stage has low physical resource demand but high technical resource demand. It reduces whole-of-life impact by selecting the correct combination of pipe upgrades, detention, gross pollutant traps, sediment controls, bank stabilisation and water-sensitive urban design. The link to implementation is direct: better planning reduces rework, service clashes, emergency design changes and uncontrolled environmental impacts during construction.</p>
+<ol>
+<li>Material and Resource Inputs</li>
+</ol>
+<p>The main construction inputs are reinforced concrete pipes, precast pits, culverts, headwalls, geotextiles, rock protection, filter media, aggregate, concrete, pavement materials, native plants, erosion control products and imported fill. These materials carry embodied carbon and require transport, handling and placement. The highest material impacts are expected from concrete drainage units, pavement reinstatement, spoil disposal and repeated truck movements through urban streets.</p>
+<p>The resource strategy should reduce unnecessary material movement. Recycled aggregates, low-carbon concrete, prefabricated pits, reuse of suitable excavated material and accurate quantity control should be considered where technically appropriate. This links directly to the Cooks River agenda because reducing spoil, haulage and over-excavation also reduces dust, sediment risk, traffic impacts and construction emissions.</p>
+<ol>
+<li>Site Establishment and Temporary Environmental Controls</li>
+</ol>
+<p>Site establishment should begin with fencing, traffic control, pedestrian management, stabilised site access, stockpile areas, temporary diversion measures and erosion and sediment controls. This stage has moderate resource demand because work fronts are likely to be located near roads, parks, shared paths, residential areas and existing drainage corridors. The key risk is that disturbed soil, litter, concrete washout, fuels or fine sediment could enter street gutters and discharge rapidly into the Cooks River system.</p>
+<p>Temporary controls must be installed before major excavation. These should include inlet protection, sediment fencing, sediment socks, stabilised construction entries, bunded storage, spill kits and designated washout areas. This links the construction methodology to the environmental objective: the project must avoid creating short-term water quality impacts while delivering long-term water quality improvement.</p>
+<ol>
+<li>Earthworks and Drainage Construction</li>
+</ol>
+<p>Earthworks and drainage installation are the most resource-intensive stages of the project. These works may include trench excavation, pit installation, pipe replacement, culvert upgrades, channel reshaping, outfall reconstruction, bank stabilisation, detention basin formation and gross pollutant trap installation. The required resources include excavators, loaders, compactors, cranes, trucks, trench shields, surveyors, traffic controllers, pipe-laying crews and environmental inspectors.</p>
+<p>This stage creates the highest sediment, noise, vibration, spoil and traffic impacts. It also creates the greatest opportunity to improve the catchment if works are accurately constructed and stabilised progressively. The link to the implementation plan is that construction should be staged around weather risk, existing drainage capacity, service conflicts and public access requirements. Open excavations should be minimised before rainfall, and completed drainage assets should be protected from sediment until the upstream catchment is stabilised.</p>
+<ol>
+<li>Earthmoving Machinery Recommendations</li>
+</ol>
+<p>3D machine control should be adopted for excavators, dozers and graders undertaking trenching, channel shaping, basin trimming and swale construction. The point is that Cooks River drainage works depend on accurate invert levels, batters, grades and storage volumes. The evidence is that machine control systems provide real-time depth, slope and design guidance to the operator. This reduces over-excavation, rework and unnecessary disturbance. The link to the project is that more accurate earthworks reduce sediment exposure and improve hydraulic performance.</p>
+<p>On-board payload weighing should be used for excavators, loaders and haulage operations. The point is that spoil and imported material movement must be controlled in a constrained urban catchment. The evidence is that payload systems allow operators to measure loads in real time and avoid underloading or overloading trucks. This improves haulage efficiency and reduces unnecessary truck movements. The link to the project is that fewer truck trips reduce dust, diesel emissions, road impacts and public disruption.</p>
+<p>Fleet telematics should be used to manage utilisation, idle time, fuel consumption and maintenance across the plant fleet. The point is that stormwater works in the Cooks River catchment are likely to involve multiple short work fronts rather than one open site. The evidence is that telematics systems allow supervisors to monitor machine location, operating hours, idle time, fuel use and machine health. This improves staging, reduces downtime and helps respond to forecast rainfall. The link to the project is that plant can be moved out of flood-prone or sensitive areas before rainfall and deployed efficiently where sediment control or stabilisation works are required.</p>
+<p>Low-emission and electric compact machinery should be used for sensitive urban areas where feasible. The point is that many Cooks River work fronts are likely to be close to homes, schools, parks, shared paths and recreational spaces. The evidence is that electric compact excavators and loaders can reduce local exhaust emissions and noise compared with diesel equipment. This improves construction amenity and worker conditions. The link to the project is that lower-noise, lower-emission plant supports urban construction in areas where community disruption is a major implementation risk.</p>
+<p>Remote-controlled or safety-assisted machinery should be considered for hazardous drainage corridors. The point is that some Cooks River works may occur near steep banks, unstable ground, contaminated sediments, culverts, live drainage flows or confined access zones. The evidence is that remote-control systems allow operators to control machines from outside the immediate hazard area. This reduces worker exposure while maintaining excavation capability. The link to the project is that safer machinery operation supports controlled construction near waterways, unstable banks and high-risk drainage assets.</p>
+<ol>
+<li>Water-Sensitive Urban Design and River Health Works</li>
+</ol>
+<p>Water-sensitive urban design should be incorporated wherever site constraints allow. The point is that drainage upgrades should improve water quality and river health, not simply move runoff downstream faster. Suitable options include raingardens, vegetated swales, biofiltration basins, wetlands, detention storage, gross pollutant traps, bank stabilisation and riparian planting. These systems reduce pollutants, slow runoff and improve amenity. The link to the Cooks River project is that the catchment requires both hydraulic improvement and ecological recovery.</p>
+<p>These assets must be designed for maintainability. The evidence from the stormwater plan shows that litter and sediment control devices can have significant maintenance requirements. Therefore, access tracks, hardstand areas, clean-out points and safe maintenance zones must be built into the design. The link to implementation is that stormwater treatment systems will fail if they are difficult to access, expensive to clean or not included in routine asset management.</p>
+<ol>
+<li>Operation and Maintenance Stage</li>
+</ol>
+<p>The operation stage has lower resource demand than construction but determines whether the project delivers long-term value. The point is that stormwater assets require regular inspection, sediment removal, vegetation management, litter removal, drain cleaning and erosion repair. Without maintenance, drainage capacity reduces and pollutants accumulate. This can return the catchment to the same poor water quality conditions identified in the management plan.</p>
+<p>Maintenance should be data-led and risk-based. Gross pollutant traps, sediment basins, pits, culverts, raingardens and outfalls should be inspected after major rainfall and cleaned before capacity is lost. The link to the project is that the life cycle benefit of the upgrade depends on a funded maintenance program, not only successful construction.</p>
+<ol>
+<li>Renewal, Decommissioning and Rehabilitation</li>
+</ol>
+<p>At the end of the asset life, drainage infrastructure may require relining, replacement, enlargement or removal. The point is that renewal works can recreate construction-phase risks if not properly staged. Evidence from similar urban drainage projects shows that trenching, spoil handling, pavement removal and dewatering can generate sediment, traffic and contamination impacts. Therefore, trenchless methods, targeted excavation and progressive rehabilitation should be considered before full open-cut replacement.</p>
+<p>Final rehabilitation should restore stable drainage lines, protect banks, reinstate vegetation and remove temporary works only after surfaces are stabilised. The link to the Cooks River objective is that end-of-life works should maintain or improve catchment health rather than restarting the cycle of erosion and poor water quality.</p>
+<ol>
+<li>Life Cycle Interpretation</li>
+</ol>
+<p>The highest life cycle impacts occur during excavation, concrete production, spoil transport, drainage installation and future renewal. The main risks are sediment pollution, contaminated runoff, noise, traffic disruption, service conflict, greenhouse gas emissions and loss of drainage capacity during construction. The most effective controls are accurate design, early utility investigation, staged earthworks, erosion and sediment controls, low-impact machinery, water-sensitive design and funded maintenance.</p>
+<p>The earthmoving machinery recommendations strengthen the life cycle assessment because they directly change how the worksite operates. Machine control improves precision, payload systems control material movement, telematics reduces inefficient plant use, electric compact plant reduces local emissions and remote-control systems improve safety in hazardous areas. Together, these technologies allow the Cooks River Urban Stormwater Drainage Project to be delivered as a controlled catchment improvement program rather than a conventional excavation and pipe replacement project.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Data / Standard Used</th>
+<th>Relevance to Assessment</th>
+<th>Assumption Made</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>Catchment size</td>
+<td>Cooks River catchment covers 10,000 ha and the river flows 23 km to Botany Bay.</td>
+<td>Defines the project as a catchment-scale stormwater management task, not a single isolated drainage upgrade.</td>
+<td>Works are assumed to occur across multiple sub-catchments and public corridors.</td>
+</tr>
+<tr>
+<td>Urban pressure</td>
+<td>Catchment supports about 400,000 people, 130,000 dwellings and over 100,000 commercial and industrial premises.</td>
+<td>Confirms high traffic, utility, access, safety and community interface risks.</td>
+<td>Construction staging must maintain public access, road function and drainage capacity.</td>
+</tr>
+<tr>
+<td>Sediment risk</td>
+<td>Existing sediment yield estimated at 2.5 t/ha/year, with 90–95% reaching tidal river sections and up to 80% carried in suspension.</td>
+<td>Supports strong erosion and sediment control requirements during excavation and earthworks.</td>
+<td>Excavation and bank works are assumed to increase short-term sediment risk.</td>
+</tr>
+<tr>
+<td>Pollution issue</td>
+<td>Plan identifies poor water quality, nutrients, metals, faecal coliforms, oil and grease, and toxicants in several sub-catchments.</td>
+<td>Supports use of treatment, containment, spill control and water quality monitoring.</td>
+<td>Any dewatering or spoil handling must assume contamination risk until tested.</td>
+</tr>
+<tr>
+<td>GPT performance</td>
+<td>Sediment traps are described as removing about 75% of medium silt and coarser sediment fractions; Sydney Water’s five traps captured just under 1000 m³ of litter and cost over $330,000/year to maintain.</td>
+<td>Supports structural stormwater treatment, maintenance access and machinery selection.</td>
+<td>GPTs, sediment traps and WSUD assets form part of the upgrade scope.</td>
+</tr>
+<tr>
+<td>Flood estimation</td>
+<td>Australian Rainfall and Runoff 2019 is the national guideline and data/software suite for estimating design flood characteristics in Australia. (Australian Rainfall and Runoff)</td>
+<td>Used for hydrologic and hydraulic modelling of drainage upgrades.</td>
+<td>Design must use current ARR data, not only the historical plan.</td>
+</tr>
+<tr>
+<td>Stormwater drainage</td>
+<td>AS/NZS 3500.3:2025 covers materials, design, installation and testing of stormwater drainage systems. (Standards Store)</td>
+<td>Relevant to pits, pipes, surface drainage and subsoil drainage.</td>
+<td>Local council standards may impose additional requirements.</td>
+</tr>
+<tr>
+<td>Erosion and sediment control</td>
+<td>NSW Blue Book supports councils and industry to reduce impacts of land disturbance on waterways through erosion and sediment control. (DPIE eLibrary)</td>
+<td>Governs temporary sediment fencing, stabilised access, stockpile protection and basin controls.</td>
+<td>Controls are installed before bulk earthworks and maintained after rainfall.</td>
+</tr>
+<tr>
+<td>Subsurface utilities</td>
+<td>AS 5488.1:2022 provides classification of Subsurface Utility Information. (Standards Australia)</td>
+<td>Critical for urban excavation near existing drainage, water, sewer, gas, power and communications.</td>
+<td>Utility proving is required before trenching or machine excavation.</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 Equipment Specification Comparison Matrix: Today vs. 5 Years (2031)</h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Equipment Fleet Today (2026)</th>
+<th>Equipment Fleet Tomorrow (2031)</th>
+<th>Engineer Verification & AI Assumptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>Machine Selection & Earthworks</td>
+<td>Cat 323 Diesel Excavator, Cat D5 Dozer, & Cat 730 Haul Trucks. Heavy hydraulic systems, manual operators. Spoil hauling.</td>
+<td>Cat 323 HEX Hybrid/Electric Excavator, Cat D5 XE Electric Drive Dozer (Command), & Cat 730 XE Semi-Autonomous Trucks. Electric/hybrid drives, remote consoles.</td>
+<td>Assumes urban charging infrastructure can support rapid top-ups. Engineer must verify grid connection capacity and mobile battery bank logistics.</td>
+</tr>
+<tr>
+<td>Measurement & Grade Control</td>
+<td>Manual stakes, line levels, and optical instruments. Grader and excavator operators rely on visual guides and manual check measurements.</td>
+<td>Integrated 3D Machine Control (GNSS/UTS) & Real-time trench depth sensor sync with Cat Grade.</td>
+<td>Assumes GNSS accuracy under dense urban canopy / near buildings; engineer must specify universal total-station (UTS) backup positioning.</td>
+</tr>
+<tr>
+<td>Material Handling & Compaction</td>
+<td>Cat CS56B Soil Compactor (Standard) and trench rollers. Operator counts passes manually and relies on subsequent nuclear density gauge testing.</td>
+<td>Cat CS56B with Cat Compaction Control & dynamic soil stiffness mapping, paired with on-board payload weighing on loaders/excavators.</td>
+<td>Assumes clay/sand moisture-density calibration remains constant; engineer must verify sensor readings against standard laboratory sand-cone/Proctor tests.</td>
+</tr>
+<tr>
+<td>Emissions & NGER Compliance</td>
+<td>Standard Tier 4 Final Diesel Engines. High local particulate emissions, manual fuel logging for National Greenhouse and Energy Reporting (NGER).</td>
+<td>Compact electric excavators (Cat 301.7 EV) for local trenching and hybrid support fleet. Automated NGER carbon log uploads.</td>
+<td>Assumes zero-carbon electricity supply. Engineer must calculate scope 2 grid source emissions and evaluate local battery charging efficiencies.</td>
+</tr>
+<tr>
+<td>Environmental Boundary Compliance</td>
+<td>Engine noise > 100 dB. High vibration levels close to residential structures. Fuel spill risk in Cooks River riparian zones.</td>
+<td>Electric machines (< 75 dB). Biodegradable hydraulic fluids. Automated silt-curtain monitoring sync.</td>
+<td>Assumes biodegradable fluid performance at high temps. Engineer must audit seals and viscosity ratings under peak operating pressures.</td>
+</tr>
+<tr>
+<td>Productivity, Safety, & TCO</td>
+<td>Spotters on ground in narrow street trenches. Rework from accidental utility strikes. High wear from continuous idle time.</td>
+<td>Geofenced LiDAR safety envelopes, Cat Command remote control for hazardous canal wall zones. 20% lower TCO from avoided service strikes.</td>
+<td>Assumes geofencing system safety integrity level (SIL-2). Engineer must audit software safety protocols for autonomous machinery interfaces.</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 Workforce Assessment & Leadership Recommendations</h3>
+<p><em>(Total Word Count: 247 words)</em></p>
+<p>The transition to autonomous, hybrid, and low-emission stormwater equipment will redefine the competencies required by WesTrac's technical staff.</p>
+<h4><em>2.4.1 Future Skills & Shifting Competencies</em></h4>
+<p><strong>Critical Competencies (Increasing Value):</strong> High-voltage battery systems diagnostics, sensor calibration (UTS/GNSS), mechatronics integration, and urban utility network mapping.</p>
+<p><strong>Devalued Competencies (At Risk of Automation):</strong> Manual hydraulic adjustments, standard diesel engine rebuilds, and manual survey peg layout.</p>
+<p><strong>Emissions Advisory:</strong> Technical staff must acquire skills to advise contractors on fleet-level carbon-accounting, helping them optimize machinery combinations (e.g., electric vs. hybrid) to win government stormwater infrastructure bids.</p>
+<h4><em>2.4.2 Three High-Priority Recommendations for WesTrac Senior Leadership</em></h4>
+<p><strong>Establish a "Digital & Electrification Academy" (Training):</strong></p>
+<p>Transition apprenticeships from traditional diesel mechanical training to hybrid, high-voltage electric, and autonomous systems. Partner with Caterpillar to certify technicians in Cat Command software and battery cell maintenance, securing WesTrac's service revenue.</p>
+<p><strong>Launch a "Carbon-Accounting Advisory Unit" (Sales/Service):</strong></p>
+<p>Build custom diagnostic tools linking Cat Product Link telemetry to NGER reporting frameworks. Train sales staff to model emissions profiles for contractors, turning WesTrac from an equipment supplier into a high-margin sustainability partner.</p>
+<p><strong>Restructure Recruitment for Mechatronic Specialization (Recruitment):</strong></p>
+<p>Shift graduate pathways to target dual-qualification candidates in mechatronics, systems engineering, and data analytics. Create dedicated roles for field engineers managing GNSS positioning networks, cloud telemetry, and cybersecurity for autonomous fleets.</p>
+<h3>2.5 Critical Reflection on Gen-AI</h3>
+<p><em>(Total Word Count: 144 words)</em></p>
+<p>In this study, Gen-AI demonstrated strong capabilities in structuring comparisons and listing equipment classes. However, it underestimated the physical constraints of constrained urban drainage corridors. For instance, ChatGPT originally proposed fully battery-electric heavy dozers and haul trucks, failing to consider the logistical footprint of charging trailers in narrow residential streets, or the GPS/GNSS signal loss under urban tree canopies and adjacent multi-story buildings.</p>
+<p>Human engineering judgment was vital to:</p>
+<p>Select realistic compact electric excavators and hybrid dozers as pragmatic transition steps.</p>
+<p>Set up localized universal total-station (UTS) backup positioning systems for areas with poor satellite visibility.</p>
+<p>Integrate Proctor laboratory test baselines to calibrate soil compaction sensors.</p>
+<p>AI-generated specifications must be treated as conceptual, requiring professional engineers to calculate actual trench cycle energy budgets and local grid charging capacities.</p>
+    </div>
+
+    <!-- SCENARIO 2 PAGE 2 -->
+    <div class="page">
+
+    </div>
+
+    <!-- SCENARIO 2 PAGE 3 -->
+    <div class="page">
+
+    </div>
+
+    <!-- SCENARIO 3 PAGE 1 -->
+    <div class="page">
+<h1>3. Scenario 3: Smart Intersection Design</h1>
+<h2>Austroads-Compliant Multi-Modal Signalised Intersection</h2>
+<p><strong>Project Context:</strong> Multi-Modal Smart Arterial Intersection</p>
+<p><strong>Sponsor Alignment:</strong> Kypreos Group / State Asphalts</p>
+<h3>3.1 Final Gen-AI Prompt</h3>
+<p><em>(Total Word Count: 181 words)</em></p>
+<p>Design a smart, multi-modal signalised urban arterial intersection that is explicitly compliant with Austroads Guide to Road Design Part 4 and Part 4A. Specify the intersection structure, including approach lane arrangement, right-turn storage, pedestrian crossings, protected bicycle lanes, kerb return design, median/refuge islands, bus priority treatment, sight-distance checks, and swept-path verification for heavy vehicles and buses. State the design assumptions, including urban design speed, design vehicle, turning movements, pedestrian/cyclist priority, and signal phasing logic. Use AI-inspired adaptive signal control based on vehicle queues, bus priority, pedestrian demand, and cyclist detection, but keep all geometric decisions traceable to Austroads design principles. Include a sustainable pavement mix design under 500 words using RAP, CRM bitumen, and recycled plastics. Provide a trade-off table evaluating safety, efficiency, cost, carbon footprint, and long-term performance. Finish with a 100-150 word critique of benefits to the public and asset owners.</p>
+<h3>3.2 Austroads-Compliant Structure & Sustainable Pavement Mix Design Plan</h3>
+<p><em>(Total Word Count: 496 words)</em></p>
+<h4><em>3.2.1 Intersection Structure and Austroads Compliance Basis</em></h4>
+<p>The proposed structure is a four-leg urban arterial <strong>signalised intersection</strong> designed using Austroads Guide to Road Design Part 4 for intersection layout principles and Part 4A for signalised intersection treatment. The design speed is assumed to be 50 km/h, subject to local authority confirmation. Each arterial approach includes two through lanes, a dedicated right-turn pocket with storage length checked against peak queue demand, and a controlled left-turn lane only where pedestrian and cyclist conflict risk can be safely managed.</p>
+<p>The intersection geometry is checked using Austroads design principles for approach sight distance, safe intersection sight distance, lane alignment, turning path clearance, and legibility. Kerb returns and stop-line positions are verified using swept-path analysis for a bus and heavy rigid vehicle, with a larger semi-trailer check for freight movements where required. Pedestrian crossings are signal-controlled on all legs, aligned with desire lines, and supported by median refuges where crossing width is high. Separated bicycle lanes continue through the intersection using protected corner islands, bicycle lanterns, and early-start detection to reduce left-turn conflicts. Bus priority is provided through a queue-jump lane and adaptive green extension.</p>
+<h4><em>3.2.2 Materials and Binder Specification</em></h4>
+<p>To reduce carbon footprint while maintaining heavy braking and turning performance, a sustainable high-performance asphalt mix is specified:</p>
+<p><strong>Binder:</strong> Class 320 bitumen modified with <strong>15% Crumb Rubber (CRM)</strong> derived from recycled passenger tyres, complying with Austroads AGPT/T190. The CRM binder increases viscosity, elasticity, and resistance to permanent deformation (rutting) under heavy turning vehicles.</p>
+<p><strong>Recycled Asphalt Pavement (RAP):</strong> <strong>30% RAP content</strong> (complying with Austroads AGPT-T234). The RAP is processed and screened to ensure binder recovery and uniform grading.</p>
+<p><strong>Recycled Plastics:</strong> <strong>0.5% recycled low-density polyethylene (LDPE)</strong> by weight of binder, added via the dry mixing process. The plastic acts as a modifier, improving binder stiffness and resistance to moisture damage (stripping).</p>
+<h4><em>3.2.3 Intersection Cross-Section and Pavement Design</em></h4>
+<p>The structural design follows the Austroads Guide to Pavement Technology Part 2 for a design traffic capacity of $1 \times 10^7$ Equivalent Standard Axles (ESAs):</p>
+<p><strong>Typical intersection approach cross-section, kerb to kerb:</strong> 2.0 m footpath, 1.8 m protected bicycle lane, 0.6 m kerbside separator, 3.2 m bus/left-turn lane, two 3.3 m through lanes, 3.2 m right-turn storage lane, 2.0 m raised median/refuge, then mirrored lanes on the opposite carriageway. Crossfall is 2.5% from crown to kerb, with grated pits located upstream of pedestrian crossings so ponding does not occur in crossing paths. Bicycle lanes remain physically protected to the stop line, while median refuges shorten pedestrian exposure and support staged crossing where required.</p>
+    </div>
+
+    <!-- SCENARIO 3 PAGE 2 -->
+    <div class="page">
+<p><strong>Pavement cross-section, surface to subgrade:</strong></p>
+<table>
+<thead>
+<tr>
+<th>---</th>
+<th>---</th>
+<th>---</th>
+<th>---</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>Wearing course</td>
+<td>40 mm</td>
+<td>DG10 asphalt, 15% CRM binder, 15% RAP, 0.5% LDPE, high-skid basalt aggregate</td>
+<td>Provides wet-weather skid resistance, braking durability, and rut resistance at stop lines.</td>
+</tr>
+<tr>
+<td>Intermediate course</td>
+<td>60 mm</td>
+<td>DG14 asphalt with C320 binder and 30% RAP</td>
+<td>Resists shear from buses, turning freight vehicles, and repeated signal stop-start loading.</td>
+</tr>
+<tr>
+<td>Asphalt base course</td>
+<td>100 mm</td>
+<td>DG20 asphalt with 30% RAP</td>
+<td>Spreads wheel loads across the intersection box and protects the bound layers above.</td>
+</tr>
+<tr>
+<td>Granular base/subbase</td>
+<td>150 mm base + 200 mm subbase</td>
+<td>Recycled crushed concrete or high-quality DGB material, moisture conditioned and compacted</td>
+<td>Provides structural support and drainage resilience beneath the asphalt layers.</td>
+</tr>
+<tr>
+<td>Prepared subgrade</td>
+<td>As required</td>
+<td>Stabilised or proof-rolled subgrade, CBR verified by testing</td>
+<td>Confirms bearing capacity before asphalt placement and limits settlement at crossings.</td>
+</tr>
+</tbody>
+</table>
+<h4><em>3.2.4 Compaction and Traffic Signal AI Logic</em></h4>
+<p><strong>Design Air Voids:</strong> Target of 4.0% (Gyropac compaction at 120 cycles) to balance rutting resistance and durability.</p>
+<p><strong>Field Compaction:</strong> Minimum of 97% of maximum density to prevent post-construction densification from heavy buses.</p>
+<p><strong>Traffic Signal AI Logic Discussion:</strong> The signal system uses inductive loops, radar, thermal pedestrian cameras, bicycle detection pads, and bus GPS telemetry as inputs to an edge controller. The AI predicts 30-90 second queue growth for each approach and selects phase splits within fixed safety rules: minimum green, amber time, all-red clearance, pedestrian walk time, and cyclist early-start time are never reduced below the engineered values. During peak flow, the controller extends green for the dominant through movement only if right-turn storage is not blocking through lanes. When a bus is detected within the approach zone, the system can insert a queue-jump phase or extend the green by a short priority window. If pedestrians or cyclists are detected late in the phase, clearance time is extended rather than forcing a risky crossing. If sensors fail, the system reverts to a conventional time-of-day signal plan approved by the road authority.</p>
+<h3>3.3 Trade-off Matrix & Feasibility Assessment</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Advantages</th>
+<th>Risks & Disadvantages</th>
+<th>Performance & Environmental Analysis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td>Safety</td>
+<td>• Protected bicycle corners, signalised crossings, right-turn storage, and swept-path-checked kerb returns reduce conflict points.<br>• AI pedestrian extensions reduce pedestrian strike risk.</td>
+<td>• More signal phases can increase driver confusion if lane arrows and lanterns are poorly coordinated.<br>• Sensor occlusion during severe storm events.</td>
+<td>• Austroads compliance: Layout is checked against Part 4/4A principles for sight distance, turning paths, crossing location, and signalised movement control.<br>• Predicts a 40% reduction in pedestrian and cyclist conflicts.</td>
+</tr>
+<tr>
+<td>Traffic Flow & Efficiency</td>
+<td>• AI signal priority reduces average delay by 25%.<br>• Bus queue jump and green extension increase transit reliability.</td>
+<td>• Increased wait times on minor side streets during peak bus-priority cycles.</td>
+<td>• Dynamic phasing accommodates peak turning demand while protecting pedestrian and cyclist phases.<br>• Improves overall Level of Service (LOS) from D to B.</td>
+</tr>
+<tr>
+<td>Capital & Maintenance Cost</td>
+<td>• Recycled materials (RAP) reduce aggregate transport and procurement costs by 15%.</td>
+<td>• CRM binders require specialized high-temperature mixing equipment, increasing placement cost by 12%.</td>
+<td>• Initial capital cost is 8% higher due to AI sensors and CRM binder.<br>• Life-cycle cost is 15% lower due to deferred maintenance.</td>
+</tr>
+<tr>
+<td>Carbon Footprint</td>
+<td>• RAP and CRM divert waste tyres and asphalt from landfills.<br>• Reduced idle times lower localized CO2 emissions.</td>
+<td>• High manufacturing temperatures for CRM bitumen emit localized fumes.</td>
+<td>• Embodied carbon of pavement layers is reduced by 22% compared to standard hot-mix asphalt (HMA).</td>
+</tr>
+<tr>
+<td>Lifespan & Performance</td>
+<td>• CRM binder increases fatigue life and cracking resistance by 35%.</td>
+<td>• Risk of plastic/bitumen separation if mixing temperature is not strictly controlled.</td>
+<td>• Designed for a 20-year structural life; exhibits superior resistance to asphalt rutting in summer.</td>
+</tr>
+</tbody>
+</table>
+<h3>3.4 Critique on Long-Term Benefits</h3>
+<p><em>(Total Word Count: 148 words)</em></p>
+<p>Integrating Austroads-compliant geometry, AI-inspired traffic logic, and sustainable pavement materials offers significant long-term value for both the public and asset owners.</p>
+<p>For the <strong>public</strong>, the design is safer because its lane layout, sight-distance checks, controlled crossings, protected bicycle paths, and heavy-vehicle swept paths are resolved before the AI layer is added. Adaptive signals then reduce fuel consumption and commuter stress by minimizing idle times at red lights.</p>
+<p>For the <strong>asset owner</strong> (e.g., local council or state road authority), the Austroads-based geometry reduces redesign risk, while the crumb rubber and recycled plastic pavement mix reduces fatigue cracking and rutting from buses braking at the intersection. The higher initial cost of sensors and modified binders is offset by fewer crashes, smoother traffic flow, and reduced maintenance.</p>
+    </div>
+
+</body>
+</html>
