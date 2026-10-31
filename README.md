@@ -10,6 +10,12 @@ Prepared as an **AI-assisted design and report submission for UTS Tech Festival 
 
 The repository contains design proposals, presentation material and report-generation tools. It does not establish a deployed software system or measured environmental, engineering or business benefits.
 
+## Recognition
+
+**State Asphalts Intelligent Transport Solutions Award** — UTS Tech Festival 2026 GenAI Hackathon, **2 July 2026**.
+
+[View the award certificate](https://github.com/Qimatxbase/engineering_portfolio/blob/main/Certificates/Certificate_UTS_GenAI_Hackathon_State_Asphalts_2026.pdf)
+
 ## What is included
 
 - Sustainable residential infrastructure concepts and architectural presentation.
