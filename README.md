@@ -14,7 +14,7 @@ The repository contains design proposals, presentation material and report-gener
 
 **State Asphalts Intelligent Transport Solutions Award** — UTS Tech Festival 2026 GenAI Hackathon, **2 July 2026**.
 
-[View the award certificate](https://github.com/Qimatxbase/engineering_portfolio/blob/main/Certificates/Certificate_UTS_GenAI_Hackathon_State_Asphalts_2026.pdf)
+[View the award certificate](docs/certificates/Certificate_UTS_GenAI_Hackathon_State_Asphalts_2026.pdf)
 
 ## What is included
 
@@ -35,5 +35,3 @@ This repository is a collection of design proposals and reports, rather than a d
 This portfolio snapshot preserves work from the following repositories. Existing author credits, citations and license files are retained; team and upstream code are not presented as solely authored work.
 
 - https://github.com/tuannm3812/uts-techfest-2026-genai-hackathon
-
-[Portfolio index](https://github.com/Qimatxbase/engineering_portfolio)
